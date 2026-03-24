@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Disease Detection - Crop Shield AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <section style="text-align: center; margin: 2rem 0;">
+        <h1 style="color: var(--forest-green); font-size: 2.5rem; margin-bottom: 1rem;">
+            <i class="fas fa-search"></i> Crop Disease Detection
+        </h1>
+        <p style="font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto;">
+            Upload a clear image of a plant leaf to detect diseases instantly using our AI-powered system.
+        </p>
+    </section>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <p class="upload-text">Click to upload or drag and drop</p>
+                <p class="upload-hint">Supported formats: JPG, PNG, JPEG (Max 16MB)</p>
+                <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png" onchange="previewImage(event)">
+            </div>
+
+            <!-- Image Preview -->
+            <div id="imagePreview" class="image-preview" style="display: none;">
+                <h3 style="color: var(--forest-green); margin-bottom: 1rem;"><i class="fas fa-images"></i> Image Preview</h3>
+                <img id="previewImg" class="preview-img" alt="Preview">
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button type="submit" class="btn" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        <i class="fas fa-rocket"></i> Analyze Image
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()" style="margin-left: 1rem;">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Information Cards -->
+    <div class="cards-grid" style="margin-top: 3rem;">
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+            <h3 class="card-title">Tips for Best Results</h3>
+            <ul style="color: #666; line-height: 2;">
+                <li>Use good lighting conditions</li>
+                <li>Capture a single leaf clearly</li>
+                <li>Avoid blurry or dark images</li>
+                <li>Focus on the affected area</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-spa"></i></div>
+            <h3 class="card-title">Supported Plants</h3>
+            <p class="card-text">
+                Apple, Blueberry, Cherry, Corn, Grape, Orange, Peach, Bell Pepper, Potato,
+                Raspberry, Soybean, Squash, Strawberry, Tomato, and more.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔒</div>
+            <h3 class="card-title">Privacy & Security</h3>
+            <p class="card-text">
+                Your uploaded images are processed securely and used only for disease detection.
+                We respect your privacy and data security.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('uploadForm').reset();
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+
+    // Drag and drop functionality
+    const uploadArea = document.querySelector('.upload-area');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        uploadArea.style.borderColor = 'var(--light-green)';
+        uploadArea.style.background = 'linear-gradient(135deg, rgba(124, 179, 66, 0.15) 0%, rgba(74, 124, 44, 0.15) 100%)';
+    }
+
+    function unhighlight(e) {
+        uploadArea.style.borderColor = 'var(--leaf-green)';
+        uploadArea.style.background = 'linear-gradient(135deg, rgba(124, 179, 66, 0.05) 0%, rgba(74, 124, 44, 0.05) 100%)';
+    }
+
+    uploadArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        document.getElementById('fileInput').files = files;
+        previewImage({ target: { files: files } });
+    }
+</script>
+{% endblock %}

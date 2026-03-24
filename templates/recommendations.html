@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}AI Recommendations - Crop Shield AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <section style="text-align: center; margin: 2rem 0;">
+        <h1 style="color: var(--forest-green); font-size: 2.5rem; margin-bottom: 1rem;">
+            <i class="fas fa-lightbulb"></i> AI-Powered Recommendations
+        </h1>
+        <p style="font-size: 1.1rem; color: #666;">
+            Based on our analysis, here are personalized recommendations for your crop.
+        </p>
+    </section>
+
+    <!-- Detection Results -->
+    <div class="results-section">
+        <div class="result-header">
+            <span class="result-icon">{% if 'Healthy' in detection.disease %}<i class="fas fa-check-circle" style="color: green;"></i>{% else %}<i class="fas fa-exclamation-circle" style="color: red;"></i>{% endif %}</span>
+            <h2 class="result-title">Detection Results</h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <div class="result-details">
+                <p class="result-label">Plant Type</p>
+                <p class="result-value">{{ detection.plant }}</p>
+            </div>
+
+            <div class="result-details">
+                <p class="result-label">Condition</p>
+                <p class="result-value {% if 'Healthy' in detection.disease %}healthy{% else %}diseased{% endif %}">
+                    {{ detection.disease }}
+                </p>
+            </div>
+
+            <div class="result-details">
+                <p class="result-label">Confidence</p>
+                <p class="result-value">{{ "%.2f"|format(detection.confidence) }}%</p>
+            </div>
+        </div>
+
+        <!-- Uploaded Image -->
+        <div class="image-preview" style="margin-top: 2rem;">
+            <h3 style="color: var(--forest-green); margin-bottom: 1rem;"><i class="fas fa-images"></i> Analyzed Image</h3>
+            <img src="{{ url_for('static', filename='uploads/' + detection.image) }}" alt="Analyzed leaf"
+                class="preview-img">
+        </div>
+    </div>
+
+    <!-- Disease Description -->
+    {% if recommendations %}
+    <div class="recommendation-card">
+        <h3 class="recommendation-title">
+            <i class="fas fa-book"></i> Disease Overview
+        </h3>
+        <p style="color: #555; line-height: 1.8; font-size: 1.05rem;">
+            {{ recommendations.description }}
+        </p>
+    </div>
+
+    <!-- Treatment Recommendations -->
+    <div class="recommendation-card">
+        <h3 class="recommendation-title">
+            <i class="fas fa-prescription-bottle-alt"></i> Treatment Recommendations
+        </h3>
+        <ul class="recommendation-list">
+            {% for treatment in recommendations.treatment %}
+            <li>{{ treatment }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Prevention Tips -->
+    <div class="recommendation-card">
+        <h3 class="recommendation-title">
+            <i class="fas fa-shield-alt"></i> Prevention Strategies
+        </h3>
+        <ul class="recommendation-list">
+            {% for prevention in recommendations.prevention %}
+            <li>{{ prevention }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Additional Resources -->
+    <div class="upload-section" style="margin-top: 3rem;">
+        <h3 style="color: var(--forest-green); margin-bottom: 1.5rem; text-align: center;">
+            <i class="fas fa-book"></i> Additional Resources
+        </h3>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-wheat-alt"></i></div>
+                <h4 class="card-title">Crop Management</h4>
+                <p class="card-text">
+                    Learn best practices for maintaining healthy crops and preventing diseases.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-microscope"></i></div>
+                <h4 class="card-title">Expert Consultation</h4>
+                <p class="card-text">
+                    Connect with agricultural experts for personalized advice and support.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-comments"></i></div>
+                <h4 class="card-title">Community Forum</h4>
+                <p class="card-text">
+                    Join our community to share experiences and learn from other farmers worldwide.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="{{ url_for('detect') }}" class="btn" style="margin-right: 1rem;">
+            <i class="fas fa-search"></i> Analyze Another Image
+        </a>
+        <a href="{{ url_for('contribute') }}" class="btn btn-secondary">
+            <i class="fas fa-handshake"></i> Contribute Your Data
+        </a>
+    </div>
+</div>
+{% endblock %}

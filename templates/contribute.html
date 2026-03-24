@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Contribute - Crop Shield AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <section style="text-align: center; margin: 2rem 0;">
+        <h1 style="color: var(--forest-green); font-size: 2.5rem; margin-bottom: 1rem;">
+            <i class="fas fa-handshake"></i> Contribute to Crop Shield AI
+        </h1>
+        <p style="font-size: 1.1rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+            Help us improve our disease detection system by contributing your plant disease images.
+            Your contributions will help train our AI to better serve the farming community.
+        </p>
+    </section>
+
+    <!-- Contribution Form -->
+    <div class="upload-section">
+        <h2 style="color: var(--forest-green); margin-bottom: 2rem; text-align: center;">
+            <i class="fas fa-edit"></i> Submit Your Disease Sample
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data" id="contributeForm">
+            <!-- Plant Name -->
+            <div class="form-group">
+                <label for="plant_name" class="form-label"><i class="fas fa-leaf"></i> Plant Name *</label>
+                <input type="text" id="plant_name" name="plant_name" class="form-input"
+                    placeholder="e.g., Corn, Potato, Rice, Sugarcane, Wheat" required>
+            </div>
+
+            <!-- Disease Name -->
+            <div class="form-group">
+                <label for="disease_name" class="form-label"><i class="fas fa-virus"></i> Disease Name *</label>
+                <input type="text" id="disease_name" name="disease_name" class="form-input"
+                    placeholder="e.g., Common Rust, Brown Spot, Leaf Blast, Red Rot" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description" class="form-label"><i class="fas fa-file-alt"></i> Description</label>
+                <textarea id="description" name="description" class="form-textarea"
+                    placeholder="Describe the symptoms, location, weather conditions, or any other relevant information..."
+                    rows="5"></textarea>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-image"></i> Upload Disease Image *</label>
+                <div class="upload-area" onclick="document.getElementById('contributeFileInput').click()">
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <p class="upload-text">Click to upload disease image</p>
+                    <p class="upload-hint">Clear, well-lit images work best (JPG, PNG, JPEG)</p>
+                    <input type="file" name="file" id="contributeFileInput" accept=".jpg,.jpeg,.png"
+                        onchange="previewContributionImage(event)" required>
+                </div>
+            </div>
+
+            <!-- Image Preview -->
+            <div id="contributionPreview" class="image-preview" style="display: none;">
+                <h3 style="color: var(--forest-green); margin-bottom: 1rem;">Preview</h3>
+                <img id="contributionPreviewImg" class="preview-img" alt="Preview">
+            </div>
+
+            <!-- Submit Button -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button type="submit" class="btn" style="font-size: 1.1rem; padding: 1rem 3rem;">
+                    ✅ Submit Contribution
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="resetContributeForm()"
+                    style="margin-left: 1rem;">
+                    🔄 Reset Form
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Why Contribute Section -->
+    <section style="margin-top: 4rem;">
+        <h2 style="color: var(--forest-green); font-size: 2rem; margin-bottom: 2rem; text-align: center;">
+            🌟 Why Your Contribution Matters
+        </h2>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">Improve Accuracy</h3>
+                <p class="card-text">
+                    More diverse training data helps our AI recognize diseases more accurately
+                    across different regions and conditions.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🌍</div>
+                <h3 class="card-title">Help Farmers Worldwide</h3>
+                <p class="card-text">
+                    Your contributions enable farmers around the world to detect and treat
+                    crop diseases more effectively.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔬</div>
+                <h3 class="card-title">Advance Research</h3>
+                <p class="card-text">
+                    Contribute to agricultural research and help develop better disease
+                    management strategies for the future.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guidelines Section -->
+    <div class="upload-section" style="margin-top: 3rem;">
+        <h3 style="color: var(--forest-green); margin-bottom: 1.5rem;">
+            📌 Contribution Guidelines
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div>
+                <h4 style="color: var(--leaf-green); margin-bottom: 0.5rem;">✅ Do's</h4>
+                <ul style="color: #666; line-height: 2;">
+                    <li>Use clear, focused images</li>
+                    <li>Capture in good lighting</li>
+                    <li>Include visible symptoms</li>
+                    <li>Provide accurate information</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #d32f2f; margin-bottom: 0.5rem;">❌ Don'ts</h4>
+                <ul style="color: #666; line-height: 2;">
+                    <li>Avoid blurry images</li>
+                    <li>Don't upload unrelated photos</li>
+                    <li>No copyrighted images</li>
+                    <li>Don't submit duplicates</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thank You Message -->
+    <div
+        style="text-align: center; margin: 4rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(74, 124, 44, 0.1) 100%); border-radius: 15px;">
+        <h3 style="color: var(--forest-green); font-size: 1.8rem; margin-bottom: 1rem;">
+            🙏 Thank You for Contributing!
+        </h3>
+        <p style="color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Every contribution helps us build a more robust and accurate disease detection system.
+            Together, we're making agriculture smarter and more sustainable.
+        </p>
+    </div>
+</div>
+
+<script>
+    function previewContributionImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('contributionPreviewImg').src = e.target.result;
+                document.getElementById('contributionPreview').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function resetContributeForm() {
+        document.getElementById('contributeForm').reset();
+        document.getElementById('contributionPreview').style.display = 'none';
+    }
+</script>
+{% endblock %}

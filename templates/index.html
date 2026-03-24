@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Crop Shield AI{% endblock %}\n
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+        <img src="{{ url_for('static', filename='homeIMG.jpg') }}" alt="Healthy Crops" class="hero-image">
+        <div class="hero-overlay">
+            <h1 class="hero-title"><i class="fas fa-leaf"></i> Crop Shield AI</h1>
+            <p class="hero-subtitle">Smart Crop Disease Detection & Management</p>
+            <a href="{{ url_for('detect') }}" class="hero-btn">Start Detection →</a>
+        </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <section style="text-align: center; margin: 3rem 0;">
+        <h2 style="color: var(--forest-green); font-size: 2.5rem; margin-bottom: 1rem;">
+            Welcome to Crop Shield AI
+        </h2>
+        <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+            Empowering farmers with instant plant disease detection using advanced AI technology.
+            Upload a leaf image and get instant diagnosis to protect your crops effectively.
+        </p>
+    </section>
+
+    <!-- Features Grid -->
+    <div class="cards-grid">
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+            <h3 class="card-title">95% Accuracy</h3>
+            <p class="card-text">
+                State-of-the-art convolutional neural networks trained on thousands of plant disease images
+                ensure highly accurate diagnosis.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-bolt"></i></div>
+            <h3 class="card-title">Real-time Results</h3>
+            <p class="card-text">
+                Get instant diagnosis in under 5 seconds. Our optimized AI model processes images
+                quickly without compromising accuracy.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-globe"></i></div>
+            <h3 class="card-title">35 Disease Classes</h3>
+            <p class="card-text">
+                Supporting major crops including Corn, Potato, Rice, Sugarcane, and Wheat,
+                covering the most critical agricultural diseases.
+            </p>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <section class="upload-section" style="margin-top: 4rem;">
+        <h2 style="color: var(--forest-green); font-size: 2rem; margin-bottom: 2rem; text-align: center;">
+            <i class="fas fa-rocket"></i> How It Works
+        </h2>
+        <div class="cards-grid">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-camera"></i></div>
+                <h3 style="color: var(--forest-green); margin-bottom: 0.5rem;">1. Capture</h3>
+                <p style="color: #666;">Take a clear photo of the suspect plant leaf</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-cloud-upload-alt"></i></div>
+                <h3 style="color: var(--forest-green); margin-bottom: 0.5rem;">2. Upload</h3>
+                <p style="color: #666;">Visit the Detection page to submit your image</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-brain"></i></div>
+                <h3 style="color: var(--forest-green); margin-bottom: 0.5rem;">3. Analyze</h3>
+                <p style="color: #666;">Our AI processes the image using deep learning</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-chart-bar"></i></div>
+                <h3 style="color: var(--forest-green); margin-bottom: 0.5rem;">4. Results</h3>
+                <p style="color: #666;">Get instant diagnosis and management tips</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section style="text-align: center; margin: 4rem 0;">
+        <h2 style="color: var(--forest-green); font-size: 2rem; margin-bottom: 1.5rem;">
+            Ready to Protect Your Crops?
+        </h2>
+        <a href="{{ url_for('detect') }}" class="btn" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+            <i class="fas fa-search"></i> Start Disease Detection
+        </a>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="cards-grid" style="margin-top: 4rem;">
+        <div class="card"
+            style="text-align: center; background: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(74, 124, 44, 0.1) 100%);">
+            <div style="font-size: 3rem; color: var(--leaf-green); font-weight: bold;">50K+</div>
+            <p style="color: var(--forest-green); font-weight: 600; margin-top: 0.5rem;">Training Images</p>
+        </div>
+        <div class="card"
+            style="text-align: center; background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(232, 198, 143, 0.1) 100%);">
+            <div style="font-size: 3rem; color: var(--wheat-gold); font-weight: bold;">35</div>
+            <p style="color: var(--forest-green); font-weight: 600; margin-top: 0.5rem;">Disease Classes</p>
+        </div>
+        <div class="card"
+            style="text-align: center; background: linear-gradient(135deg, rgba(107, 68, 35, 0.1) 0%, rgba(139, 90, 60, 0.1) 100%);">
+            <div style="font-size: 3rem; color: var(--earth-brown); font-weight: bold;">95%+</div>
+            <p style="color: var(--forest-green); font-weight: 600; margin-top: 0.5rem;">Validation Accuracy</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
